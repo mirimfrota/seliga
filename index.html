@@ -1,27 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="ICONE.ico" type="Aula-03/ICONE">
-   <title>Top 5 Melhores filmes de Terror</title>
+import numpy as np
+import matplotlib.pyplot as plt
+import networkx as nx
+
+def generate_origami_diagram(character_name):
+    """
+    Gera um diagrama simples de origami 3D para um personagem dado.
+    """
+    np.random.seed(hash(character_name) % (2**32))  # Seed para consistência
     
-   <style>
-       body {
-            background-image:linear-gradient(to dark blue);
-           text-align:center;
-        }
-        h1,
-        h2,
-        a{
-            color:black;
-            font-size:30px;
-            text-align:center;
-            align-items:center;
-        }
-        a{
-            text-decoration:none;
-            color:black;
-        }
-    </style>
-</head>
+    G = nx.Graph()
+    num_nodes = np.random.randint(5, 15)
+    
+    for i in range(num_nodes):
+        G.add_node(i, pos=(np.random.rand(), np.random.rand()))
+    
+    for _ in range(num_nodes * 2):
+        a, b = np.random.choice(num_nodes, 2, replace=False)
+        G.add_edge(a, b)
+    
+    pos = nx.get_node_attributes(G, 'pos')
+    plt.figure(figsize=(6, 6))
+    nx.draw(G, pos, with_labels=True, node_color='lightblue', edge_color='gray', node_size=500)
+    plt.title(f"Diagrama Origami: {character_name}")
+    plt.savefig(f"origami_{character_name}.png")
+    plt.show()
+
+if __name__ == "__main__":
+    character_name = input("Digite o nome do personagem: ")
+    generate_origami_diagram(character_name)
